@@ -1,116 +1,16 @@
-# 🧩 Projeto POS React
+# React + Vite
 
-**Disciplina:** Desenvolvimento de Aplicações Interativas com React
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Neste projeto, você será responsável por desenvolver um **sistema CRUD completo** (Create, Read, Update, Delete) de sua escolha — como a gestão de uma escola, academia, locadora ou outro escopo de preferência.  
-Utilizando **React** como framework principal, o objetivo é aplicar os conceitos apresentados em aula, desde a **criação e estilização de componentes** até o **consumo de APIs e gerenciamento de estado**.
+Currently, two official plugins are available:
 
-Durante o desenvolvimento, será essencial utilizar ferramentas modernas do **JavaScript ES6**, manipular listas e formulários, implementar **navegação entre páginas com React Router**, além de **integrar APIs externas** para aprimorar a aplicação.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-O objetivo é entregar um sistema funcional, organizado e que demonstre sua compreensão das tecnologias aprendidas.
+## React Compiler
 
----
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## 🗂 Organização do Projeto em Features
+## Expanding the ESLint configuration
 
-O desenvolvimento será dividido em **três features principais**.  
-Uma *feature* é uma funcionalidade ou característica específica do sistema que atende a uma necessidade do usuário ou do negócio.  
-Essa divisão permite trabalhar em partes menores e mais gerenciáveis.
-
-### 📋 Features
-
-1. **Implementação com JavaScript moderno e Interface usando React**  
-2. **Gerenciamento de dados, reatividade e manipulação de listas**  
-3. **Integração com APIs externas e navegação entre páginas**
-
----
-
-## 🧱 I. Implementação com JavaScript moderno e Interface usando React
-
-Nesta feature, o foco será na **criação e estilização da interface** do sistema CRUD, integrando **JavaScript moderno** e **React**.
-
-### 🔹 Implementação do CRUD com JavaScript moderno
-
-- Utilizar **funções arrow** nas ações do CRUD (criar, ler, atualizar, deletar) para uma sintaxe concisa e legível.  
-- Aplicar **destructuring** para extrair dados de objetos nas funções de criação e atualização.  
-- Empregar **operadores spread/rest** na manipulação de arrays e objetos.  
-- Estruturar o projeto com **módulos e imports**, separando lógica de negócio e UI.  
-- Utilizar **template literals** para gerar mensagens dinâmicas (ex.: alertas de exclusão).
-
-### 🔹 Interface principal do CRUD usando componentes React
-
-- Criar **componentes reutilizáveis** (formulários, tabelas, botões).  
-- Utilizar **JSX** para renderização dinâmica com base no estado da aplicação.  
-- Aplicar **estilização personalizada** via CSS puro ou bibliotecas (ex.: **Material UI**).
-
-> **Resultado esperado:** Uma aplicação CRUD funcional e visualmente atraente, integrando lógica moderna de JavaScript com a estrutura de componentes do React.
-
----
-
-## ⚙️ II. Gerenciamento de dados, reatividade e manipulação de listas
-
-Nesta feature, o foco é o **gerenciamento eficiente de dados**, **reatividade** e **manipulação de listas**, utilizando Hooks, Context API e eventos.
-
-### 🔹 Gerenciamento de dados e renderização condicional
-
-- Utilizar **props e state** para controle do estado e da interface.  
-- Aplicar **renderização condicional** para exibir telas e mensagens dinâmicas (sucesso, erro etc).
-
-### 🔹 Gerenciamento de estado global e reatividade
-
-- Utilizar **useState** para gerenciar formulários e dados.  
-- Implementar **useEffect** para efeitos colaterais (como busca inicial de dados).  
-- Criar **Hooks personalizados** para lógica repetitiva (ex.: manipulação de formulários).  
-- Usar **Context API** para compartilhar dados entre componentes sem “prop drilling”.
-
-### 🔹 Manipulação de listas e formulários
-
-- Renderizar listas de registros de forma dinâmica.  
-- Manipular eventos de **clique e submissão** de formulários.  
-- Implementar **validação** e controle de dados em formulários controlados.  
-- Utilizar **Promises** para lidar com requisições assíncronas e tratamento de erros.
-
-> **Resultado esperado:** Uma aplicação CRUD robusta e reativa, com gerenciamento eficiente de estado e listas.
-
----
-
-## 🌐 III. Integração com APIs externas e navegação em uma aplicação
-
-Nesta feature, abordaremos a **integração com APIs externas** e a **navegação entre páginas** com React Router.
-
-### 🔹 Integração com APIs externas
-
-- Utilizar **Fetch API** ou **Axios** para operações CRUD com a API.  
-- Implementar **tratamento de erros** em requisições.  
-- Integrar uma **API real** (ex.: OpenWeather, GitHub) e exibir dados dinamicamente.  
-- Utilizar **React Query** para cache e atualização automática dos dados.
-
-### 🔹 Navegação e componentes de terceiros
-
-- Configurar **rotas básicas** com **React Router** (lista, detalhes, edição).  
-- Implementar **rotas privadas** para áreas restritas (ex.: painel administrativo).  
-- Utilizar **componentes de terceiros** (ex.: **AG Grid**, **Material UI**) para visualização e UI aprimorada.  
-- Tratar **race conditions** com `Promise.race` e **AbortController** para cancelar requisições.
-
-> **Resultado esperado:** Uma aplicação CRUD moderna, integrada com APIs externas, com navegação fluida e experiência de usuário otimizada.
-
----
-
-## 🚀 Conclusão
-
-Ao final deste projeto, você terá desenvolvido uma aplicação React completa e funcional, aplicando os principais conceitos de:
-
-- **React e JSX**  
-- **Hooks e Context API**  
-- **Manipulação de estado e listas**  
-- **Integração com APIs externas**  
-- **Navegação entre rotas**  
-- **JavaScript ES6+ moderno**
-
----
-
-### 💡 Dica
-
-Organize o código com **boas práticas**, **componentização** e **padronização** de estilos para destacar a qualidade e manutenibilidade da sua aplicação.
-
----
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
