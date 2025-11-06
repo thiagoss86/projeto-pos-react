@@ -78,5 +78,19 @@ export const useMovies = () => {
         }
     };
 
-    return {movies, loading, error, lastAction, createMovie, updateMovie, deleteMovie, clearMovies};
+    const refresh = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const data = await svc.loadMovies();
+            setMovies(data);
+        } catch (e) {
+            setError(e?.message || 'Falha ao recarregar os filmes');
+            throw e;
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return {movies, loading, error, lastAction, createMovie, updateMovie, deleteMovie, clearMovies, refresh};
 }

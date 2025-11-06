@@ -21,15 +21,15 @@ export default function MovieForm({ onCreate, onUpdate, editingMovie, onCancelEd
         }
     }, [editingMovie]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const { title, director, genre, releaseYear, rating } = values;
 
         if (editingMovie) {
-            onUpdate(editingMovie.id, { title, director, genre, releaseYear, rating });
+            await onUpdate(editingMovie.id, { title, director, genre, releaseYear, rating });
             onCancelEdit();
         } else {
-            onCreate({ title, director, genre, releaseYear, rating });
+            await onCreate({ title, director, genre, releaseYear, rating });
         }
         reset();
     };

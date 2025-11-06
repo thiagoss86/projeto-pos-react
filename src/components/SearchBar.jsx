@@ -1,19 +1,27 @@
-export default function SearchBar({ onSearch }) {
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        const query = String(data.get('q') || '').trim();
-        onSearch(query);
+import { useEffect, useState } from "react";
+
+export default function SearchBar({ value, onSearch, placeholder = "Buscar por título" }) {
+    const handleChange = (e) => onSearch(e.target.value);
+    const handleKeyDown = (e) => {
+        if (e.key === 'Escape') onSearch('');
     };
 
     return (
-        <form onSubmit={handleSubmit} className="card" style={{ marginBottom: 12 }}>
+        <div className="card">
             <div className="grid">
                 <label className="col-span">
-                    Buscar por título
-                    <input name="q" placeholder="Digite e precione Enter" />
+                    <input
+                        name="q"
+                        value={value}
+                        onChange={handleChange}
+                        onKeyDown={handleKeyDown}
+                        placeholder={placeholder}
+                    />
                 </label>
             </div>
-        </form>
-    );
+            <div className="actions">
+                <button type="button" className="ghost" onClick={() => onSearch('')}>Limpar</button>
+            </div>
+        </div>
+    )
 }
