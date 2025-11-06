@@ -66,3 +66,40 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.toast {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+  margin: 12px 0;
+  will-change: transform, opacity;
+}
+
+.toast__icon { font-size: 18px; line-height: 1; }
+.toast__msg  { font-size: 14px; }
+
+/* Tons */
+.toast--loading { background: #1a1a2b; color: #e7e7f7; }
+.toast--success { background: #1a2b1a; color: #b3ffb3; border-color: #214a21; }
+.toast--error   { background: #2b1a1a; color: #ffb3b3; border-color: #4a2121; }
+
+/* Enter/Exit animations (300ms) */
+.toast.enter {
+  animation: toast-in 300ms ease forwards;
+}
+.toast.exit {
+  animation: toast-out 300ms ease forwards;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes toast-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(8px); }
+}
