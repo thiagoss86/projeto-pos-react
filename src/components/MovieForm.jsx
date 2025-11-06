@@ -1,72 +1,68 @@
 import { useEffect, useState } from "react";
 
 const initialFormState = {
-  title: "",
-  director: "",
-  genre: "",
-  releaseYear: "",
-  rating: "",
+    title: "",
+    director: "",
+    genre: "",
+    releaseYear: "",
+    rating: "",
 };
 
 export default function MovieForm({ onCreate, onUpdate, editingMovie, onCancelEdit }) {
-    const [formData, setFormData] = useState(initialFormState);
+    const [values, register, setAll, reset] = useState(initialFormState);
 
     useEffect(() => {
         if (editingMovie) {
             const { title, director, genre, releaseYear, rating } = editingMovie;
-            setFormData({ title, director, genre, releaseYear, rating });
+            setAll({ title, director, genre, releaseYear, rating });
         } else {
-            setFormData(initialFormState);
+            reset();
         }
-    }, [editingMovie]);
-
-    const handleChange = ({ target: { name, value } }) => {
-        setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+    }, [editingMovie, setAll]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const { title, director, genre, releaseYear, rating } = formData;
+        const { title, director, genre, releaseYear, rating } = values;
 
-        if(editingMovie) {
-            onUpdate({ id: editingMovie.id, title, director, genre, releaseYear, rating });
+        if (editingMovie) {
+            onUpdate(editingMovie.id, { title, director, genre, releaseYear, rating });
             onCancelEdit();
         } else {
             onCreate({ title, director, genre, releaseYear, rating });
         }
-        setFormData(initialFormState);
+        reset();
     };
 
     return (
-        <form className= "card forn" onSubmit={handleSubmit}>
+        <form className="card forn" onSubmit={handleSubmit}>
             <h2>{editingMovie ? "Editar Filme" : "Adicionar Filme"}</h2>
 
             <div className="grid">
                 <label>
                     Título:
-                    <input name="title" value={formData.title} onChange={handleChange} placeholder="Ex: O Senhor dos Áneis"/>
+                    <input {...register("title")} placeholder="Ex: O Senhor dos Áneis" />
                 </label>
                 <label>
                     Diretor:
-                    <input name="director" value={formData.director} onChange={handleChange} placeholder="Ex: Peter Jackson"/>
+                    <input {...register("director")} placeholder="Ex: Peter Jackson" />
                 </label>
                 <label>
                     Gênero:
-                    <input name="genre" value={formData.genre} onChange={handleChange} placeholder="Ex: Fantasia"/>
+                    <input {...register("genre")} placeholder="Ex: Fantasia" />
                 </label>
                 <label>
                     Ano de Lançamento:
-                    <input name="releaseYear" value={formData.releaseYear} onChange={handleChange} placeholder="Ex: 2001"/>
+                    <input {...register("releaseYear")} placeholder="Ex: 2001" />
                 </label>
                 <label>
                     Avaliação:
-                    <input name="rating" value={formData.rating} onChange={handleChange} placeholder="Ex: 9.3"/>
+                    <input {...register("rating")} placeholder="Ex: 9.3" />
                 </label>
             </div>
 
             <div className="actions">
                 <button type="submit" className="primary">
-                     {editingMovie ? "Atualizar Filme" : "Adicionar Filme"}
+                    {editingMovie ? "Atualizar Filme" : "Adicionar Filme"}
                 </button>
                 {editingMovie && (
                     <button type="button" onClick={onCancelEdit} className="ghost">
