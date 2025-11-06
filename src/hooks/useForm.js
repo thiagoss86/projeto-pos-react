@@ -1,4 +1,3 @@
-import { set } from "mongoose";
 import { useState } from "react";
 
 export const useForm = (initialValues = {}) => {
@@ -16,5 +15,5 @@ export const useForm = (initialValues = {}) => {
     const setAll = (next) => setValues((prev) => ({ ...prev, ...next }));
     const reset = () => setValues(initialValues);
 
-    return { register, values };
+    return { register, values, setAll, reset};
 };

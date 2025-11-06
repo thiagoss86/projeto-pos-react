@@ -1,5 +1,5 @@
 const STORAGE_KEY = 'movies-db';
-const delay = ms => new Promise(res => setTimeout(res, ms));
+const delay = (ms = 300) => new Promise((res)=> setTimeout(res, ms));
 
 const read = () => {
     try {
@@ -10,7 +10,7 @@ const read = () => {
     }
 };
 
-const wrtie = (data) => localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+const write  = (data) => localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 
 export const loadMovies = async () => {
     await delay();
@@ -21,7 +21,7 @@ export const createMovie = async ({ title, director, genre, releaseYear, rating 
     await delay();
     const list = read();
     const movie = { id: crypto.randomUUID(), title, director, genre, releaseYear, rating };
-    wrtie([...list, movie]);
+    write ([...list, movie]);
     return movie;
 };
 
@@ -32,7 +32,7 @@ export const updateMovie = async (id, data) => {
     if (idx === -1) throw new Error('Filme não encontrado');
     const updated = { ...list[idx], ...data };
     list[idx] = updated;
-    wrtie(list);
+    write (list);
     return updated;
 };
 
@@ -41,11 +41,11 @@ export const deleteMovie = async (id) => {
     const list = read();
     const movie = list.find(movie => movie.id === id);
     if (!movie) throw new Error('Filme não encontrado');
-    wrtie(list.filter(movie => movie.id !== id));
+    write (list.filter(movie => movie.id !== id));
     return movie;
 };
 
 export const clearMovies = async () => {
     await delay();
-    wrtie([]);
+    write ([]);
 };

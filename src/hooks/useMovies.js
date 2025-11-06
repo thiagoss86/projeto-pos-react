@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-import * as svc from '../services/movies';
-import { loadMovies, updateMovie, clearMovies } from './../services/movieService';
-import { set } from 'mongoose';
+import * as svc from '../services/movieService';
 
 export const useMovies = () => {
     const [movies, setMovies] = useState([]);
@@ -79,4 +77,6 @@ export const useMovies = () => {
             setLoading(false);
         }
     };
+
+    return {movies, loading, error, lastAction, createMovie, updateMovie, deleteMovie, clearMovies};
 }

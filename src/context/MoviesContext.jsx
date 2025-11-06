@@ -1,16 +1,15 @@
-import { createContext, use, useContext } from "react";
+import { createContext, useContext } from "react";
 import { useMovies } from "../hooks/useMovies";
-import { useMovies } from './../hooks/useMovies';
 
-const MovieContext = createContext(null);
+const MoviesContext = createContext(null);
 
 export function MoviesProvider({ children }) {
-    const movies = useMovies();
-    return <MovieContext.Provider value={movies}>{children}</MovieContext.Provider>;
+    const moviesApi = useMovies();
+    return <MoviesContext.Provider value={moviesApi}>{children}</MoviesContext.Provider>;
 }
 
 export const useMoviesContext = () => {
-    const ctx = useContext(MovieContext);
-    if (!ctx) throw new Error("useMoviesContext must be used within a MoviesProvider");
+    const ctx = useContext(MoviesContext);
+    if (!ctx) throw new Error("useMoviesContext deve ser usado dentro de <MoviesProvider>");
     return ctx;
 };

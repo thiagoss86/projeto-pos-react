@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useForm } from "../hooks/useForm";
 
 const initialFormState = {
     title: "",
@@ -9,7 +10,7 @@ const initialFormState = {
 };
 
 export default function MovieForm({ onCreate, onUpdate, editingMovie, onCancelEdit }) {
-    const [values, register, setAll, reset] = useState(initialFormState);
+    const { values, register, setAll, reset } = useForm(initialFormState);
 
     useEffect(() => {
         if (editingMovie) {
@@ -18,7 +19,7 @@ export default function MovieForm({ onCreate, onUpdate, editingMovie, onCancelEd
         } else {
             reset();
         }
-    }, [editingMovie, setAll]);
+    }, [editingMovie]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
