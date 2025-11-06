@@ -56,7 +56,7 @@ export default function MovieForm({ onCreate, onUpdate, editingMovie, onCancelEd
                 </label>
                 <label>
                     Avaliação:
-                    <input {...register("rating")} placeholder="Ex: 9.3" />
+                    <input {...register("rating")} placeholder="Ex: 9.5" />
                 </label>
             </div>
 
