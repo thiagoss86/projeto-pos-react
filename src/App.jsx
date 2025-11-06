@@ -7,8 +7,8 @@ import { MoviesProvider, useMoviesContext } from './context/MoviesContext';
 import './index.css'
 
 function MoviesPage() {
-  const { movies, loading, error, lastAction, createMovie, updateMovie, deleteMovie, clearMovies } = useMoviesContext();
-  const [editindId, setEdidintId] = useState(null);
+  const { movies, loading, error, lastAction, createMovie, updateMovie, deleteMovie, clearMovies, refresh } = useMoviesContext();
+  const [editingId, setEditingId] = useState(null);
   const [query, setQuery] = useState('');
 
   const filtered = useMemo(() => {
@@ -16,13 +16,13 @@ function MoviesPage() {
     return !q ? movies : movies.filter((m) => m.title.toLowerCase().includes(q));
   }, [movies, query]);
 
-  const editingMovie = useMemo(() => movies.find((m) => m.id === editindId) || null, [movies, editindId]);
-  const handleEdit = (id) => setEdidintId(id);
-  const handleCancelEdit = () => setEdidintId(null);
+  const editingMovie = useMemo(() => movies.find((m) => m.id === editingId) || null, [movies, editingId]);
+  const handleEdit = (id) => setEditingId(id);
+  const handleCancelEdit = () => setEditingId(null);
 
   const handleDelete = async (id) => {
     await deleteMovie(id);
-    if (editindId === id) setEdidintId(null);
+    if (editingId === id) setEditingId(null);
   };
 
   return (
@@ -36,11 +36,18 @@ function MoviesPage() {
 
       <Feedback loading={loading} error={error} success={lastAction?.message} />
 
-      <SearchBar onSearch={setQuery} />
+      <SearchBar value={query} onSearch={setQuery} />
 
       <MovieForm
-        onCreate={createMovie}
-        onUpdate={updateMovie}
+        onCreate={async (data) => {
+          await createMovie(data);
+          setQuery('');
+        }}
+        onUpdate={async (id, data) => {
+          await updateMovie(id, data);
+          await refresh();
+          setQuery('');
+        }}
         editingMovie={editingMovie}
         onCancelEdit={handleCancelEdit}
       />

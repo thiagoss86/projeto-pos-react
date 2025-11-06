@@ -1,7 +1,7 @@
-import  MovieButton from './MovieButton';
+import MovieButton from './MovieButton';
 
 export default function MovieTable({ movies, onEdit, onDelete }) {
-    if(movies.length === 0) {
+    if (movies.length === 0) {
         return <p className='muted'>Nenhum filme cadastrado.</p>;
     }
 
@@ -19,22 +19,25 @@ export default function MovieTable({ movies, onEdit, onDelete }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {movies.map((movie) => (
-                        <tr key={movie.id}>
-                            <td>{movie.title}</td>
-                            <td>{movie.director}</td>
-                            <td>{movie.genre}</td>
-                            <td>{movie.releaseYear}</td>
-                            <td>{movie.rating}</td>
+                    {movies.map(({ id, title, director, genre, releaseYear, rating }) => (
+                        <tr key={id}>
+                            <td>{title}</td>
+                            <td>{director}</td>
+                            <td>{genre}</td>
+                            <td>{releaseYear}</td>
+                            <td>{rating}</td>
                             <td className='row-actions'>
-                                <MovieButton title="Editar" onClick={() => onEdit(movie)}>
+                                <MovieButton title="Editar" onClick={() => onEdit(id)}>
                                     ✏️
                                 </MovieButton>
-                                <MovieButton title="Excluir" variant="danger" onClick={() =>{
-                                    if(confirm(`Deseja excluir o filme "${title}"?`)) {
-                                        onDelete(movie.id);
-                                    }
-                                }}>
+                                <MovieButton
+                                    title="Excluir"
+                                    variant="danger"
+                                    onClick={() => {
+                                        if (confirm(`Deseja excluir o filme "${title}"?`)) {
+                                            onDelete(id);
+                                        }
+                                    }}>
                                     🗑️
                                 </MovieButton>
                             </td>
