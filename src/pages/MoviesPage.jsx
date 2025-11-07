@@ -1,20 +1,22 @@
 import { useMemo, useState } from 'react'
+import { Typography, Button } from '@mui/material'
 import MovieForm from '../components/MovieForm'
 import MovieTable from '../components/MovieTable'
 import Feedback from '../components/Feedback'
 import SearchBar from '../components/SearchBar'
 import { useMoviesContext } from '../contexts/MoviesContext';
+import { PageWarper, ActionsBar, RigthActions } from './MoviePage.styles';
 
 export default function MoviesPage() {
-  const { 
-    movies, 
-    loading, 
-    error, 
-    lastAction, 
-    createMovie, 
-    updateMovie, 
-    deleteMovie, 
-    clearMovies, 
+  const {
+    movies,
+    loading,
+    error,
+    lastAction,
+    createMovie,
+    updateMovie,
+    deleteMovie,
+    clearMovies,
     refresh } = useMoviesContext();
 
   const [editingId, setEditingId] = useState(null);
@@ -36,31 +38,38 @@ export default function MoviesPage() {
   };
 
   return (
-    <>
-      <Feedback loading={loading} error={error} success={lastAction?.message} />
+    <PageWarper>
+      <Typography variant="h6" sx={{ fontWeight: 700, textAlign: 'center' }}>Base de dados</Typography>
 
-      <div className='card'>
-        <button className='ghost' onClick={() => clearMovies()}>Limpar Tudo</button>
-        <button className='ghost' onClick={() => refresh()}>Atualizar Lista</button>
-      </div>
+      <Feedback loading={loading} error={error} lastAction={lastAction?.message} />
 
-      <SearchBar value={query} onSearch={setQuery} />
+      <ActionsBar elevation={3}>
+        <Typography variant='body2' color="textSecondary">
+          {filtered?.length ?? 0} filme(s) listado(s)
+        </Typography>
+        <RigthActions>
+          <Button variant='outlined' color='inherit' onClick={clearMovies}>
+            Limpar Tudo
+          </Button>
+          <Button variant='outlined' color='inherit' onClick={refresh}>
+            Recarregar
+          </Button>
+        </RigthActions>
+      </ActionsBar>
+
+      <SearchBar value={query} onSearch={setQuery} placeholder="Pesquisar filmes por nome..." />
 
       <MovieForm
-        onCreate={async (data) => {
-          await createMovie(data);
-          setQuery('');
-        }}
-        onUpdate={async (id, data) => {
-          await updateMovie(id, data);
-          await refresh();
-          setQuery('');
-        }}
+        onCreate={async (data) => { await createMovie(data); setQuery(''); }}
+        onUpdate={async (id, data) => { await updateMovie(id, data); await refresh(); setQuery('') }}
         editingMovie={editingMovie}
         onCancelEdit={handleCancelEdit}
       />
-
-      <MovieTable movies={filtered} onEdit={handleEdit} onDelete={handleDelete} />
-    </>
+      <MovieTable
+        movies={filtered}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
+    </PageWarper>
   )
 }
