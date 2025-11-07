@@ -1,42 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import MovieForm from './components/MovieForm'
-import MovieTable from './components/MovieTable'
+import { Route, Routes, Navigate } from 'react-router-dom'
+import MoviesPage from './pages/MoviesPage';
+import TmdbPage from './pages/TmdbPage';
+import LoginPage from './pages/LoginPage';
+import ProtectedRoute from './routes/ProtectedRoute';
+import { AuthProvider } from './contexts/AuthContext'
+import { MoviesProvider } from './contexts/MoviesContext';
+import  NavBar  from './components/NavBar';
+import './index.css'
 
-function App() {
-
+export default function App() {
   return (
-    <div className="container">
-      <header className='header'>
-        <h1>Catálogo de Filmes</h1>
-        <div className='header-actions'>
-          <button className='ghost' onClick={() => clearMovies()}>Limpar Tudo</button>
-          <a className='link' href='https://github.com/' target='_blank' rel='noreferrer'>
-            GitHub do Projeto
-          </a>
-        </div>
-      </header>
-
-      <MovieForm 
-        onCreate={createMovie}
-        onUpdate={updateMovie}
-        editingMovie={editingMovie}
-        onCancelEdit={handleCancelEdit}
-      />
-
-      <MovieTable 
-        movies = {movies}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      />
-
-      <footer className='footer'>
-        Feito com React + Vue por Thiago Santos
-      </footer>
-    </div>
+    <AuthProvider>
+      <div className='container'>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Navigate to="/movies" replace />} />
+          <Route path="/movies" element={<MoviesProvider><MoviesPage /></MoviesProvider>} />
+          <Route path="/tmdb" element={<MoviesProvider><TmdbPage /></MoviesProvider>} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/admin"
+            element={
+              <ProtectedRoute>
+                <div className='card'>Área administrativa</div>
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<div className='card'>404 - Página não encontrada</div>} />
+        </Routes>
+      </div>
+    </AuthProvider>
   )
 }
-
-export default App
