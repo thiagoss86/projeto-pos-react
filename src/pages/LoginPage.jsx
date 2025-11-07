@@ -2,9 +2,11 @@ import { useState } from "react";
 import { useLocation, useNavigate, NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import Feedback from './../components/Feedback';
+import { AuthCard, FormRow, Actions } from './LoginPage.styles';
+import { Button, TextField, Typography } from "@mui/material";
 
 export default function LoginPage() {
-    const {login, error} = useAuth();
+    const { login, error } = useAuth();
     const [email, setEmail] = useState("admin@app.com");
     const [password, setPassword] = useState("");
     const [submitting, setSubmitting] = useState(false);
@@ -27,53 +29,38 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="card" style={{maxWidth: 420, margin: '40px auto'}}>
-            <h2 style={{marginTop: 0}}>Login</h2>
-
+        <AuthCard component="form" onSubmit={handleSubmit} elevation={3}>
+            <Typography variant="h6" sx={{ fontWeight: 700, mb: 1 }}>
+                Login
+            </Typography>
             <Feedback loading={submitting} error={error} />
 
-            <form onSubmit={handleSubmit} className="form">
-                <div className="grid">
-                    <label className="col-span">
-                        E-mail
-                        <input 
-                            autoFocus
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            inputMode="email"
-                        />
-                    </label>
-                    <label className="col-span">
-                        Senha
-                        <input 
-                            type="password"
-                            placeholder="mín 6 caracteres"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </label>
-                </div>
+            <FormRow>
+                <TextField
+                    autoFocus
+                    type="email" label="E-mail"
+                    placeholder="exemple@email.com" value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <TextField
+                    type="password" label="Senha"
+                    placeholder="********" value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+            </FormRow>
 
-                <div className="actions">
-                    <button className="primary" type="submit" disabled={submitting}>
-                         {submitting ? "Entrando..." : "Entrar"}
-                    </button>
-                    <NavLink to="/" className="ghost" style={{
-                            textDecoration: 'none',
-                            display: 'inline-block',
-                            padding: '10px 15px',
-                            borderRadius: 10,
-                            border: '1px solid #ccc',
-                        }}>
-                        Cancelar
-                    </NavLink>
-                </div>
+            <Actions>
+                <Button type="submit" variant="contained" disabled={submitting} fullWidth>
+                    {submitting ? "Entrando..." : "Entrar"}
+                </Button>
+                <Button component={NavLink} to="/" variant="outlined" color="inherit" fullWidth>
+                    Voltar
+                </Button>
+            </Actions>
 
-                <p className="muted" style={{marginTop: 10}}>
-                    Dica: use <code>admin@app.com</code> como e-mail e qualquer senha com no mínimo 6 caracteres.
-                </p>
-            </form>
-        </div>
+            <Typography variant="caption" component="text.secondary" sx={{ mt: 1, display: "block" }}>
+                Dica: use <code>admin@app.com</code> como e-mail e qualquer senha 6+ caracteres.
+            </Typography>
+        </AuthCard>
     )
 }
